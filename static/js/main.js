@@ -9,18 +9,17 @@ function updateScroll() {
 }
 
 sendButton.addEventListener("click", function(e) {
-  //   let newElem = document.createElement("h5");
-  //   newElem.append(`Me: ${msgInput.value}`);
-  //   chatContainer.appendChild(newElem);
-  addNewChatContent("h5", "Me", msgInput.value);
+  addNewChatContent("h4", "user-msg", "Me", msgInput.value);
   fetch(`/send?message=` + msgInput.value)
     .then(res => res.json())
-    .then(json => addNewChatContent("h5", "Bot", json));
+    .then(json => addNewChatContent("h4", "bot-msg", "Bot", json));
 });
 
-function addNewChatContent(element, owner, content) {
+function addNewChatContent(element, classname, owner, content) {
   let newElem = document.createElement(element);
   newElem.append(owner, `: `, content);
+  newElem.className += classname;
+
   chatContainer.insertBefore(newElem, chatAnchor);
   updateScroll();
 }
